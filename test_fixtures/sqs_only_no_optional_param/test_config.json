@@ -1,0 +1,11 @@
+{
+    "queue_apps": [
+        {
+            "queue": "DEV-MYAPP",
+            "tags": {
+                "App": "myapp",
+                "Env": "dev"
+            }
+        }
+    ]
+}

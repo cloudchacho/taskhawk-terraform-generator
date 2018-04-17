@@ -1,0 +1,12 @@
+{{tfDoNotEditStamp}}
+
+{{range .QueueApps -}}
+module "alerts-{{hclident .Queue}}" {
+  source                                 = "git@github.com:Automatic/taskhawk-terraform//alert?ref={{version}}"
+  queue                                  = "{{.Queue}}"
+  dlq_alarm_high_message_count_actions   = {{ hclvalue actions.DLQAlertAlarmActions }}
+  dlq_ok_high_message_count_actions      = {{ hclvalue actions.DLQAlertOKActions }}
+  queue_alarm_high_message_count_actions = {{ hclvalue actions.QueueAlertAlarmActions }}
+  queue_ok_high_message_count_actions    = {{ hclvalue actions.QueueAlertOKActions }}
+}
+{{- end}}

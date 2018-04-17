@@ -1,0 +1,54 @@
+{
+    "queue_apps": [
+        {
+            "queue": "DEV-MYAPP",
+            "tags": {
+                "App": "myapp",
+                "Env": "dev"
+            },
+            "schedule": [
+                {
+                    "name": "nightly-job",
+                    "description": "nightly job for sqs app",
+                    "format_version": "v1.0",
+                    "headers": {
+                        "request_id": "<id>"
+                    },
+                    "task": "tasks.send_email",
+                    "args": [
+                        "hello@automatic.com",
+                        "Hello!",
+                        10
+                    ],
+                    "kwargs": {
+                        "from_email": "spam@example.com",
+                        "with_delay": 100
+                    },
+                    "schedule_expression": "cron(0 10 * * ? *)"
+                }
+            ]
+        },
+        {
+            "queue": "DEV-SECONDAPP",
+            "tags": {
+                "App": "secondapp",
+                "Env": "dev"
+            }
+        }
+    ],
+    "lambda_apps": [
+        {
+            "function_arn": "arn:aws:lambda:us-west-2:12345:function:myFunction:deployed",
+            "function_name": "myFunction",
+            "function_qualifier": "deployed",
+            "name": "dev-anotherapp",
+            "schedule": [
+                {
+                    "name": "nightly-job",
+                    "task": "tasks.cleanup_task",
+                    "schedule_expression": "cron(0 5 * * ? *)"
+                }
+            ]
+        }
+    ]
+}

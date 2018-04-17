@@ -1,0 +1,25 @@
+{{tfDoNotEditStamp}}
+
+{{range .QueueApps -}}
+module "app-{{hclident .Queue}}" {
+  source         = "git@github.com:Automatic/taskhawk-terraform//queue_app?ref={{version}}"
+  queue          = "{{.Queue}}"
+  {{ with iam -}}
+  iam = "true"
+  {{- end }}
+
+  {{with .Tags -}}
+  tags = {{hclvalue .}}
+  {{- end}}
+}
+{{- end}}
+
+{{range .LambdaApps -}}
+module "app-{{hclident .Name}}" {
+  source             = "git@github.com:Automatic/taskhawk-terraform//lambda_app?ref={{version}}"
+  function_arn       = "{{.FunctionARN}}"
+  function_name      = "{{.FunctionName}}"{{if .FunctionQualifier}}
+  function_qualifier = "{{.FunctionQualifier}}"{{end}}
+  name               = "{{.Name}}"
+}
+{{- end}}

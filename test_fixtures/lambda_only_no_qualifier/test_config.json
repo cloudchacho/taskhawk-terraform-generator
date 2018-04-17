@@ -1,0 +1,8 @@
+{
+    "lambda_apps": [
+        {
+            "function_arn": "arn:aws:lambda:us-west-2:12345:function:myFunction",
+            "name": "dev-anotherapp"
+        }
+    ]
+}

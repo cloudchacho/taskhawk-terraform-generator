@@ -1,0 +1,47 @@
+{{tfDoNotEditStamp}}
+
+{{define "SchedulerHelper" -}}
+{{with .Description -}}
+  description = "{{.}}"
+{{- end}}
+
+  {{with .FormatVersion -}}
+  format_version = "{{.}}"
+  {{- end}}
+
+  {{with .Headers -}}
+  headers = {{hclvalue .}}
+  {{- end}}
+
+  task    = "{{.Task}}"
+  {{with .Args -}}
+  args    = {{hclvalue .}}
+  {{- end}}
+  {{with .Kwargs -}}
+  kwargs  = {{hclvalue .}}
+  {{- end}}
+
+  schedule_expression = "{{.ScheduleExpression}}"
+{{end}}
+
+{{range $q := .QueueApps -}}
+{{range .Schedule -}}
+module "scheduler-{{hclident $q.Queue}}-{{hclident .Name}}" {
+  source      = "git@github.com:Automatic/taskhawk-terraform//scheduler?ref={{version}}"
+  queue       = "${module.app-{{hclident $q.Queue}}.default_queue_arn}"
+  name        = "taskhawk-{{hclident $q.Queue}}-{{.Name}}"
+  {{template "SchedulerHelper" .}}
+}
+{{- end}}
+{{- end}}
+
+{{range $l := .LambdaApps -}}
+{{range .Schedule -}}
+module "scheduler-{{hclident $l.Name}}-{{hclident .Name}}" {
+  source      = "git@github.com:Automatic/taskhawk-terraform//scheduler?ref={{version}}"
+  topic       = "${module.app-{{hclident $l.Name}}.sns_topic_default_arn}"
+  name        = "taskhawk-{{hclident $l.Name}}-{{.Name}}"
+  {{template "SchedulerHelper" .}}
+}
+{{- end}}
+{{- end}}
