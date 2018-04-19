@@ -1,7 +1,6 @@
 # Taskhawk Terraform Generator
 
-.. image:: https://travis-ci.org/Automatic/taskhawk-terraform-generator.svg?branch=master
-    :target: https://travis-ci.org/Automatic/taskhawk-terraform-generator
+[![Build Status](https://travis-ci.org/Automatic/taskhawk-terraform-generator.svg?branch=master)](https://travis-ci.org/Automatic/taskhawk-terraform-generator)
 
 [Taskhawk](https://github.com/Automatic/taskhawk) is a replacement for celery that works on AWS SQS/SNS, while
 keeping things pretty simple and straight forward. 
