@@ -42,6 +42,30 @@ to create Terraform modules. The module is named `taskhawk` by default in the cu
 
 Re-run on any changes.
 
+## Development
+
+### Getting Started
+
+Assuming that you have go installed, set up your environment:
+
+.. code:: sh
+
+    $ go get github.com/kardianos/govendor
+    $ go get github.com/go-bindata/go-bindata/...
+    $ go get github.com/Automatic/taskhawk-terraform-generator
+    $ cd ${GOPATH}/src/github.com/Automatic/taskhawk-terraform-generator
+    $ govendor sync
+
+### Running Tests
+
+You can run tests in using ``make test``. By default, it will run all of the unit and functional tests, but you can 
+also run specific tests directly using go test:
+
+.. code:: sh
+
+    $ go test ./...
+    $ go test -run TestGenerate ./...
+
 ## Release Notes
 
 [Github Releases](https://github.com/Automatic/taskhawk-terraform-generator/releases)
