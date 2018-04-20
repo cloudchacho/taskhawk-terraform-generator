@@ -48,23 +48,23 @@ Re-run on any changes.
 
 Assuming that you have go installed, set up your environment:
 
-.. code:: sh
-
-    $ go get github.com/kardianos/govendor
-    $ go get github.com/go-bindata/go-bindata/...
-    $ go get github.com/Automatic/taskhawk-terraform-generator
-    $ cd ${GOPATH}/src/github.com/Automatic/taskhawk-terraform-generator
-    $ govendor sync
+```sh
+$ go get github.com/kardianos/govendor
+$ go get github.com/go-bindata/go-bindata/...
+$ go get github.com/Automatic/taskhawk-terraform-generator
+$ cd ${GOPATH}/src/github.com/Automatic/taskhawk-terraform-generator
+$ govendor sync
+```
 
 ### Running Tests
 
 You can run tests in using ``make test``. By default, it will run all of the unit and functional tests, but you can 
 also run specific tests directly using go test:
 
-.. code:: sh
-
-    $ go test ./...
-    $ go test -run TestGenerate ./...
+```sh
+$ go test ./...
+$ go test -run TestGenerate ./...
+```
 
 ## Release Notes
 
