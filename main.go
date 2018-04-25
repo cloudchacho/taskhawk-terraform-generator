@@ -15,7 +15,7 @@ const (
 	VERSION = "1.4.0"
 
 	// TFQueueModuleVersion represents the version of the taskhawk-queue module
-	TFQueueModuleVersion = "1.1.1"
+	TFQueueModuleVersion = "1.1.2"
 
 	// TFLambdaModuleVersion represents the version of the taskhawk-lambda module
 	TFLambdaModuleVersion = "1.0.0"
