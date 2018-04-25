@@ -15,4 +15,4 @@ build:
 	cd bin/darwin-amd64 && zip taskhawk-terraform-generator-darwin-amd64.zip taskhawk-terraform-generator; cd -
 
 clean:
-	rm -rf bin
+	rm -rf bin bindata.go taskhawk

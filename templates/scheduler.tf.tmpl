@@ -27,9 +27,11 @@
 {{range $q := .QueueApps -}}
 {{range .Schedule -}}
 module "scheduler-{{hclident $q.Queue}}-{{hclident .Name}}" {
-  source      = "git@github.com:Automatic/taskhawk-terraform//scheduler?ref={{version}}"
+  source  = "Automatic/taskhawk-scheduler/aws"
+  version = "~> {{TFSchedulerModuleVersion}}"
+
   queue       = "${module.app-{{hclident $q.Queue}}.default_queue_arn}"
-  name        = "taskhawk-{{hclident $q.Queue}}-{{.Name}}"
+  name        = "{{hclident $q.Queue}}-{{.Name}}"
   {{template "SchedulerHelper" .}}
 }
 {{- end}}
@@ -38,9 +40,17 @@ module "scheduler-{{hclident $q.Queue}}-{{hclident .Name}}" {
 {{range $l := .LambdaApps -}}
 {{range .Schedule -}}
 module "scheduler-{{hclident $l.Name}}-{{hclident .Name}}" {
-  source      = "git@github.com:Automatic/taskhawk-terraform//scheduler?ref={{version}}"
+  source  = "Automatic/taskhawk-scheduler/aws"
+  version = "~> {{TFSchedulerModuleVersion}}"
+
   topic       = "${module.app-{{hclident $l.Name}}.sns_topic_default_arn}"
-  name        = "taskhawk-{{hclident $l.Name}}-{{.Name}}"
+  name        = "{{hclident $l.Name}}-{{.Name}}"
+
+  function_name      = "{{$l.FunctionName}}"
+  {{ with $l.FunctionQualifier -}}
+    function_qualifier = "{{.}}"
+  {{- end}}
+
   {{template "SchedulerHelper" .}}
 }
 {{- end}}

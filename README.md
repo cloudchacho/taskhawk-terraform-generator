@@ -5,10 +5,9 @@
 [Taskhawk](https://github.com/Automatic/taskhawk) is a replacement for celery that works on AWS SQS/SNS, while
 keeping things pretty simple and straight forward. 
 
-[Taskhawk-Terraform](https://github.com/Automatic/taskhawk-terraform) provides custom [Terraform](https://www.terraform.io/) modules for deploying Taskhawk infrastructure.
-
-Taskhawk-Terraform-Generator is a utility that makes the process of managing Terraform modules easier by abstracting 
-away details about Terraform.
+Taskhawk Terraform Generator is a CLI utility that makes the process of managing 
+[Taskhawk Terraform modules](https://registry.terraform.io/search?q=taskhawk&verified=false) easier by abstracting 
+away details about [Terraform](https://www.terraform.io/).
 
 ## Usage 
 

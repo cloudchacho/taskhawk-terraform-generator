@@ -11,43 +11,41 @@ import (
 )
 
 const (
-	alertsFile    = "alerts.tf"
 	appsFile      = "apps.tf"
 	schedulerFile = "scheduler.tf"
+	variablesFile = "variables.tf"
 )
 
-func shouldSkipFile(config *Config, needAlerts bool, file string) bool {
+func shouldSkipFile(config *Config, file string) bool {
+	hasScheduleQueueApp, hasScheduleLambdaApp := false, false
+	for _, app := range config.LambdaApps {
+		if len(app.Schedule) > 0 {
+			hasScheduleLambdaApp = true
+			break
+		}
+	}
+	for _, app := range config.QueueApps {
+		if len(app.Schedule) > 0 {
+			hasScheduleQueueApp = true
+			break
+		}
+	}
+
 	switch file {
-	case alertsFile:
-		return !needAlerts
 	case schedulerFile:
-		hasSchedule := false
-		for _, app := range config.LambdaApps {
-			if len(app.Schedule) > 0 {
-				hasSchedule = true
-				break
-			}
-		}
-		if hasSchedule {
-			return false
-		}
-		for _, app := range config.QueueApps {
-			if len(app.Schedule) > 0 {
-				hasSchedule = true
-				break
-			}
-		}
-		return !hasSchedule
+		return !hasScheduleQueueApp && !hasScheduleLambdaApp
+	case variablesFile:
+		return !hasScheduleQueueApp
 	default:
 		return false
 	}
 }
 
-func writeFiles(config *Config, needAlerts bool, module string, templates *template.Template) error {
-	files := []string{alertsFile, appsFile, schedulerFile}
+func writeFiles(config *Config, module string, templates *template.Template) error {
+	files := []string{appsFile, schedulerFile, variablesFile}
 
 	for _, file := range files {
-		if shouldSkipFile(config, needAlerts, file) {
+		if shouldSkipFile(config, file) {
 			continue
 		}
 		path := filepath.Join(module, file)
@@ -75,16 +73,25 @@ func initTemplates(c *cli.Context) (*template.Template, error) {
 		"DLQAlertAlarmActions":   c.StringSlice(dlqAlertAlarmActionsFlag),
 		"DLQAlertOKActions":      c.StringSlice(dlqAlertOKActionsFlag),
 	}
+	variables := map[string]string{
+		"AwsAccountID": c.String(awsAccountIDFlag),
+		"AwsRegion":    c.String(awsRegionFlag),
+	}
 
 	templates := template.New("taskhawk-templates")
 	templates = templates.Funcs(template.FuncMap{
 		"generator_version": func() string { return VERSION },
-		"version":           func() string { return TFModulesVersion },
 		"iam":               func() bool { return c.Bool(iamFlag) },
 		"actions":           func() map[string][]string { return actions },
+		"variables":         func() map[string]string { return variables },
 		"hclvalue":          hclvalue,
 		"hclident":          hclident,
 		"tfDoNotEditStamp":  func() string { return tfDoNotEditStamp },
+		"alerting":          func() bool { return c.Bool(alertingFlag) },
+
+		"TFQueueModuleVersion":     func() string { return TFQueueModuleVersion },
+		"TFLambdaModuleVersion":    func() string { return TFLambdaModuleVersion },
+		"TFSchedulerModuleVersion": func() string { return TFSchedulerModuleVersion },
 	})
 
 	for _, name := range AssetNames() {
@@ -116,9 +123,7 @@ func writeTerraform(config *Config, c *cli.Context) error {
 		return errors.Wrap(err, "unable to initialize templates")
 	}
 
-	needAlerts := c.Bool(alertingFlag) && len(config.QueueApps) > 0
-
-	if err := writeFiles(config, needAlerts, module, templates); err != nil {
+	if err := writeFiles(config, module, templates); err != nil {
 		return err
 	}
 

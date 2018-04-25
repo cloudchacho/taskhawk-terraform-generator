@@ -28,6 +28,8 @@ func argsForTest(configFilepath string) []string {
 		configFilepath,
 		"--alerting",
 		"--iam",
+		fmt.Sprintf(`--%s=12345`, awsAccountIDFlag),
+		fmt.Sprintf(`--%s=us-west-2`, awsRegionFlag),
 		fmt.Sprintf(`--%s=pager_action`, queueAlertAlarmActionsFlag),
 		fmt.Sprintf(`--%s=pager_action2`, queueAlertAlarmActionsFlag),
 		fmt.Sprintf(`--%s=pager_action`, queueAlertOKActionsFlag),
@@ -94,16 +96,23 @@ func TestGenerate(t *testing.T) {
 			expectedBytes, err := ioutil.ReadFile(testOutputFileName)
 			require.NoError(t, err)
 
+			expected := string(expectedBytes)
 			// poor template engine
-			expected := strings.Replace(string(expectedBytes), "{{VERSION}}", TFModulesVersion, -1)
-			expected = strings.Replace(expected, "{{tfDoNotEditStamp}}", tfDoNotEditStamp, -1)
+			expected = strings.Replace(
+				expected, "{{TFQueueModuleVersion}}", TFQueueModuleVersion, -1)
+			expected = strings.Replace(
+				expected, "{{TFLambdaModuleVersion}}", TFLambdaModuleVersion, -1)
+			expected = strings.Replace(
+				expected, "{{TFSchedulerModuleVersion}}", TFSchedulerModuleVersion, -1)
+			expected = strings.Replace(
+				expected, "{{tfDoNotEditStamp}}", tfDoNotEditStamp, -1)
 
 			actualB, err := ioutil.ReadFile(filepath.Join("taskhawk", testOutputFile.Name()))
 			require.NoError(t, err)
 
 			assert.Equal(
 				t, expected, string(actualB),
-				dmp.DiffPrettyText(dmp.DiffMain(expected, string(actualB), false)),
+				dmp.DiffPrettyText(dmp.DiffMain(expected, string(actualB), true)),
 			)
 		}
 

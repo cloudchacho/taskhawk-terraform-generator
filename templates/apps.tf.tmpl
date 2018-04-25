@@ -2,24 +2,45 @@
 
 {{range .QueueApps -}}
 module "app-{{hclident .Queue}}" {
-  source         = "git@github.com:Automatic/taskhawk-terraform//queue_app?ref={{version}}"
+  source  = "Automatic/taskhawk-queue/aws"
+  version = "~> {{TFQueueModuleVersion}}"
+
   queue          = "{{.Queue}}"
   {{ with iam -}}
-  iam = "true"
+    iam = "true"
   {{- end }}
+  {{ with alerting -}}
+    alerting = "true"
+  {{- end }}
+  {{ with .Schedule -}}
+    enable_scheduler = "true"
+    aws_region       = "${var.aws_region}"
+    aws_account_id   = "${var.aws_account_id}"
+  {{- end}}
 
   {{with .Tags -}}
   tags = {{hclvalue .}}
+  {{- end}}
+
+  {{if alerting -}}
+      dlq_alarm_high_message_count_actions   = {{ hclvalue actions.DLQAlertAlarmActions }}
+      dlq_ok_high_message_count_actions      = {{ hclvalue actions.DLQAlertOKActions }}
+      queue_alarm_high_message_count_actions = {{ hclvalue actions.QueueAlertAlarmActions }}
+      queue_ok_high_message_count_actions    = {{ hclvalue actions.QueueAlertOKActions }}
   {{- end}}
 }
 {{- end}}
 
 {{range .LambdaApps -}}
 module "app-{{hclident .Name}}" {
-  source             = "git@github.com:Automatic/taskhawk-terraform//lambda_app?ref={{version}}"
-  function_arn       = "{{.FunctionARN}}"
-  function_name      = "{{.FunctionName}}"{{if .FunctionQualifier}}
-  function_qualifier = "{{.FunctionQualifier}}"{{end}}
+  source  = "Automatic/taskhawk-lambda/aws"
+  version = "~> {{TFLambdaModuleVersion}}"
+
   name               = "{{.Name}}"
+  function_arn       = "{{.FunctionARN}}"
+  function_name      = "{{.FunctionName}}"
+  {{with .FunctionQualifier -}}
+    function_qualifier = "{{.}}"
+  {{- end}}
 }
 {{- end}}

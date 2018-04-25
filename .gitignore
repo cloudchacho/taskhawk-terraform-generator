@@ -1,14 +1,6 @@
 # Logs
 *.log
 
-# Unit test / coverage reports
-.coverage
-.tox
-
-# Translations
-*.mo
-*.pot
-
 # Pycharm
 .idea
 *.iml
@@ -18,9 +10,6 @@
 *~
 *.swp
 *.swo
-
-# test files
-*.pem
 
 # emacs
 .dir-locals.el
@@ -35,6 +24,3 @@ vendor/*
 # binary
 bin
 bindata.go
-
-# deps
-deps
