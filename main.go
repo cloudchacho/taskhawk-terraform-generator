@@ -12,10 +12,10 @@ import (
 
 const (
 	// VERSION represents the version of the generator tool
-	VERSION = "1.4.2"
+	VERSION = "1.4.3"
 
 	// TFQueueModuleVersion represents the version of the taskhawk-queue module
-	TFQueueModuleVersion = "1.1.2"
+	TFQueueModuleVersion = "1.1.3"
 
 	// TFLambdaModuleVersion represents the version of the taskhawk-lambda module
     TFLambdaModuleVersion = "1.1.0"
