@@ -22,20 +22,26 @@ type ScheduleItem struct {
 	ScheduleExpression string                 `json:"schedule_expression"`
 }
 
+func isValidPriority(value string) bool {
+	return value == "default" || value == "high" || value == "bulk" || value == "low"
+}
+
 // QueueApp struct represents a Taskhawk consumer app
 type QueueApp struct {
-	Queue    string            `json:"queue"`
-	Tags     map[string]string `json:"tags"`
-	Schedule []ScheduleItem    `json:"schedule,omitempty"`
+	Queue                      string            `json:"queue"`
+	Tags                       map[string]string `json:"tags"`
+	Schedule                   []ScheduleItem    `json:"schedule,omitempty"`
+	HighMessageCountThresholds map[string]int    `json:"high_message_count_thresholds,omitempty"`
 }
 
 // LambdaApp struct represents a Taskhawk subscription for a lambda app
 type LambdaApp struct {
-	FunctionARN       string         `json:"function_arn"`
-	FunctionName      string         `json:"function_name,omitempty"`
-	FunctionQualifier string         `json:"function_qualifier,omitempty"`
-	Name              string         `json:"name"`
-	Schedule          []ScheduleItem `json:"schedule,omitempty"`
+	FunctionARN                string         `json:"function_arn"`
+	FunctionName               string         `json:"function_name,omitempty"`
+	FunctionQualifier          string         `json:"function_qualifier,omitempty"`
+	Name                       string         `json:"name"`
+	Schedule                   []ScheduleItem `json:"schedule,omitempty"`
+	HighMessageCountThresholds map[string]int `json:"high_message_count_thresholds,omitempty"`
 }
 
 var lambdaARNRegexp = regexp.MustCompile(`^arn:aws:lambda:([^:]+):([^:]+):function:([^:]+)(:([^:]+))?$`)
@@ -80,7 +86,7 @@ func NewConfig(filename string) (*Config, error) {
 	config := Config{}
 	err = json.Unmarshal(configContents, &config)
 	if err != nil {
-		return nil, fmt.Errorf("unable to read config file as JSON object: %q", err)
+		return nil, errors.Wrap(err, "unable to read config file as JSON object")
 	}
 
 	err = config.validate()
@@ -106,6 +112,17 @@ func (c *Config) validateConsumers() error {
 	for _, consumer := range c.QueueApps {
 		if !queueRegex.MatchString(consumer.Queue) {
 			return fmt.Errorf("invalid queue name '%s' didn't match: %s", consumer.Queue, queueRegex)
+		}
+
+		if consumer.HighMessageCountThresholds != nil {
+			for priority, threshold := range consumer.HighMessageCountThresholds {
+				if !isValidPriority(priority) {
+					return errors.Errorf("invalid priority: '%s'", priority)
+				}
+				if threshold < 0 {
+					return errors.Errorf("invalid threshold: '%d'", threshold)
+				}
+			}
 		}
 	}
 	return nil

@@ -2,18 +2,14 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
-
-	"strconv"
-
-	"fmt"
-
 	"reflect"
-
 	"sort"
+	"strconv"
+	"strings"
 
 	"github.com/hashicorp/hcl/hcl/printer"
 	"github.com/huandu/xstrings"
@@ -64,7 +60,7 @@ func hclvalue(v interface{}) string {
 	}
 	switch rv.Kind() {
 	default:
-		panic(fmt.Sprintf("Can not handle value '%v' of unknown kind: %v", v, rv.Kind()))
+		panic(errors.Errorf("Can not handle value '%v' of unknown kind: %v", v, rv.Kind()))
 	case reflect.Bool:
 		if rv.Bool() {
 			return `"true"`

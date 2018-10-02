@@ -12,13 +12,13 @@ import (
 
 const (
 	// VERSION represents the version of the generator tool
-	VERSION = "1.4.3"
+	VERSION = "1.5.0"
 
 	// TFQueueModuleVersion represents the version of the taskhawk-queue module
 	TFQueueModuleVersion = "1.1.3"
 
 	// TFLambdaModuleVersion represents the version of the taskhawk-lambda module
-    TFLambdaModuleVersion = "1.1.0"
+	TFLambdaModuleVersion = "1.1.0"
 
 	// TFSchedulerModuleVersion represents the version of the taskhawk-scheduler module
 	TFSchedulerModuleVersion = "1.0.5"
@@ -54,6 +54,9 @@ const (
 
 	// queueAlertOKActionsFlag represents the cli flag for DLQ alert actions on OK
 	queueAlertOKActionsFlag = "queue-alert-ok-actions"
+
+	// highMessageCountThresholdFlag represents the cli flag for high message count
+	highMessageCountThresholdFlag = "high-message-count-threshold"
 )
 
 func validateArgs(c *cli.Context) *cli.ExitError {
@@ -68,7 +71,7 @@ func validateArgs(c *cli.Context) *cli.ExitError {
 		for _, f := range alertingFlags {
 			if !c.IsSet(f) {
 				alertingFlagsOkay = false
-				msg := fmt.Sprintf("--%s is required", f)
+				msg := fmt.Sprintf("--%s is required\n", f)
 				if _, err := fmt.Fprint(cli.ErrWriter, msg); err != nil {
 					return cli.NewExitError(msg, 1)
 				}
@@ -81,7 +84,7 @@ func validateArgs(c *cli.Context) *cli.ExitError {
 		for _, f := range alertingFlags {
 			if c.IsSet(f) {
 				alertingFlagsOkay = false
-				msg := fmt.Sprintf("--%s is disallowed", f)
+				msg := fmt.Sprintf("--%s is disallowed\n", f)
 				if _, err := fmt.Fprint(cli.ErrWriter, msg); err != nil {
 					return cli.NewExitError(msg, 1)
 				}
@@ -138,6 +141,9 @@ func generateConfigFileStructure(c *cli.Context) error {
 							"kwarg1": "{optional keyword args}",
 						},
 					},
+				},
+				HighMessageCountThresholds: map[string]int{
+					"bulk": 100000,
 				},
 			},
 		},
@@ -224,6 +230,10 @@ func runApp(args []string) error {
 				cli.StringFlag{
 					Name:  awsRegionFlag,
 					Usage: "AWS Region",
+				},
+				cli.IntFlag{
+					Name:  highMessageCountThresholdFlag,
+					Usage: "High message count threshold",
 				},
 			},
 			Action: generateModule,

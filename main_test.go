@@ -38,6 +38,7 @@ func argsForTest(configFilepath string) []string {
 		fmt.Sprintf(`--%s=pager_action2`, dlqAlertAlarmActionsFlag),
 		fmt.Sprintf(`--%s=pager_action`, dlqAlertOKActionsFlag),
 		fmt.Sprintf(`--%s=pager_action2`, dlqAlertOKActionsFlag),
+		fmt.Sprintf(`--%s=5000`, highMessageCountThresholdFlag),
 	}
 }
 

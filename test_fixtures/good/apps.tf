@@ -35,6 +35,11 @@ module "app-dev-myapp" {
     "pager_action",
     "pager_action2",
   ]
+
+  queue_alarm_high_message_count_threshold               = 5000
+  queue_alarm_high_priority_high_message_count_threshold = 5000
+  queue_alarm_low_priority_high_message_count_threshold  = 5000
+  queue_alarm_bulk_high_message_count_threshold          = 5000
 }
 
 module "app-dev-secondapp" {
@@ -69,6 +74,11 @@ module "app-dev-secondapp" {
     "pager_action",
     "pager_action2",
   ]
+
+  queue_alarm_high_message_count_threshold               = 1000
+  queue_alarm_high_priority_high_message_count_threshold = 100
+  queue_alarm_low_priority_high_message_count_threshold  = 50000
+  queue_alarm_bulk_high_message_count_threshold          = 100000
 }
 
 module "app-dev-anotherapp" {

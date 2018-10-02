@@ -80,14 +80,15 @@ func initTemplates(c *cli.Context) (*template.Template, error) {
 
 	templates := template.New("taskhawk-templates")
 	templates = templates.Funcs(template.FuncMap{
-		"generator_version": func() string { return VERSION },
-		"iam":               func() bool { return c.Bool(iamFlag) },
-		"actions":           func() map[string][]string { return actions },
-		"variables":         func() map[string]string { return variables },
-		"hclvalue":          hclvalue,
-		"hclident":          hclident,
-		"tfDoNotEditStamp":  func() string { return tfDoNotEditStamp },
-		"alerting":          func() bool { return c.Bool(alertingFlag) },
+		"generator_version":         func() string { return VERSION },
+		"iam":                       func() bool { return c.Bool(iamFlag) },
+		"actions":                   func() map[string][]string { return actions },
+		"variables":                 func() map[string]string { return variables },
+		"hclvalue":                  hclvalue,
+		"hclident":                  hclident,
+		"tfDoNotEditStamp":          func() string { return tfDoNotEditStamp },
+		"alerting":                  func() bool { return c.Bool(alertingFlag) },
+		"highMessageCountThreshold": func() int { return c.Int(highMessageCountThresholdFlag) },
 
 		"TFQueueModuleVersion":     func() string { return TFQueueModuleVersion },
 		"TFLambdaModuleVersion":    func() string { return TFLambdaModuleVersion },
