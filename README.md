@@ -43,16 +43,22 @@ Re-run on any changes.
 
 ## Development
 
+### Prerequisites
+
+Install go1.11
+
 ### Getting Started
 
 Assuming that you have go installed, set up your environment:
 
 ```sh
-$ go get github.com/kardianos/govendor
-$ go get github.com/go-bindata/go-bindata/...
-$ go get github.com/Automatic/taskhawk-terraform-generator
-$ cd ${GOPATH}/src/github.com/Automatic/taskhawk-terraform-generator
-$ govendor sync
+$ # in a location NOT in your GOPATH:
+$ git checkout github.com/Automatic/taskhawk-terraform-generator
+$ cd taskhawk-terraform-generator
+$ go get -mod=readonly -v ./...
+$ GO111MODULE=off go get github.com/go-bindata/go-bindata/...
+$ GO111MODULE=off go get -u github.com/client9/misspell/cmd/misspell
+$ GO111MODULE=off go get -u honnef.co/go/tools/cmd/staticcheck
 ```
 
 ### Running Tests
