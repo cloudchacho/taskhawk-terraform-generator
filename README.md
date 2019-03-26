@@ -80,9 +80,6 @@ $ go test -run TestGenerate ./...
 
 ```sh
 make clean build
-
-cd bin/linux-amd64 && zip taskhawk-terraform-generator-linux-amd64.zip taskhawk-terraform-generator; cd -
-cd bin/darwin-amd64 && zip taskhawk-terraform-generator-darwin-amd64.zip taskhawk-terraform-generator; cd -
 ```
 
 Upload to Github and attach the zip files created in above step.
