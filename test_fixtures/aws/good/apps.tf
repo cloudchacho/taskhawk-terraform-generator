@@ -2,7 +2,7 @@
 
 module "app-dev-myapp" {
   source  = "Automatic/taskhawk-queue/aws"
-  version = "~> {{TFQueueModuleVersion}}"
+  version = "~> {{TFAWSQueueModuleVersion}}"
 
   queue            = "DEV-MYAPP"
   iam              = "true"
@@ -44,7 +44,7 @@ module "app-dev-myapp" {
 
 module "app-dev-secondapp" {
   source  = "Automatic/taskhawk-queue/aws"
-  version = "~> {{TFQueueModuleVersion}}"
+  version = "~> {{TFAWSQueueModuleVersion}}"
 
   queue    = "DEV-SECONDAPP"
   iam      = "true"
@@ -83,7 +83,7 @@ module "app-dev-secondapp" {
 
 module "app-dev-anotherapp" {
   source  = "Automatic/taskhawk-lambda/aws"
-  version = "~> {{TFLambdaModuleVersion}}"
+  version = "~> {{TFAWSLambdaModuleVersion}}"
 
   name               = "dev-anotherapp"
   function_arn       = "arn:aws:lambda:us-west-2:12345:function:myFunction:deployed"

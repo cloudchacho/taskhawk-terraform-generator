@@ -2,7 +2,7 @@
 
 module "app-dev-myapp" {
   source  = "Automatic/taskhawk-queue/aws"
-  version = "~> {{TFQueueModuleVersion}}"
+  version = "~> {{TFAWSQueueModuleVersion}}"
 
   queue = "DEV-MYAPP"
 

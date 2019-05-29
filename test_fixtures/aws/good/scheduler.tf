@@ -2,7 +2,7 @@
 
 module "scheduler-dev-myapp-nightly-job" {
   source  = "Automatic/taskhawk-scheduler/aws"
-  version = "~> {{TFSchedulerModuleVersion}}"
+  version = "~> {{TFAWSSchedulerModuleVersion}}"
 
   queue       = "${module.app-dev-myapp.default_queue_arn}"
   name        = "dev-myapp-nightly-job"
@@ -32,7 +32,7 @@ module "scheduler-dev-myapp-nightly-job" {
 
 module "scheduler-dev-anotherapp-nightly-job" {
   source  = "Automatic/taskhawk-scheduler/aws"
-  version = "~> {{TFSchedulerModuleVersion}}"
+  version = "~> {{TFAWSSchedulerModuleVersion}}"
 
   topic = "${module.app-dev-anotherapp.sns_topic_default_arn}"
   name  = "dev-anotherapp-nightly-job"

@@ -23,8 +23,8 @@ func TestValidateSchemaFail(t *testing.T) {
   "lambda_apps": "not-a-list"
 }
 `)
-	assert.EqualError(t, json.Unmarshal(schema, &Config{}),
-		"json: cannot unmarshal string into Go struct field Config.lambda_apps of type []*main.LambdaApp")
+	assert.EqualError(t, json.Unmarshal(schema, &AWSConfig{}),
+		"json: cannot unmarshal string into Go struct field AWSConfig.lambda_apps of type []*main.LambdaApp")
 }
 
 func TestValidateQueue(t *testing.T) {
@@ -34,9 +34,9 @@ func TestValidateQueue(t *testing.T) {
 		"PUNCTUATION!",
 	}
 
-	config := Config{}
+	config := AWSConfig{}
 	for _, queue := range invalidQueues {
-		config.QueueApps = []*QueueApp{{Queue: queue}}
+		config.QueueApps = []*AWSQueueApp{{Queue: queue}}
 		assert.EqualError(
 			t,
 			config.validate(),
@@ -47,7 +47,7 @@ func TestValidateQueue(t *testing.T) {
 }
 
 func TestValidateNoApps(t *testing.T) {
-	config := Config{}
+	config := AWSConfig{}
 	assert.EqualError(
 		t,
 		config.validate(),
@@ -98,15 +98,15 @@ func TestValidJSON(t *testing.T) {
   ]
 }`)
 
-	var validConfigObj = Config{
-		QueueApps: []*QueueApp{
+	var validConfigObj = AWSConfig{
+		QueueApps: []*AWSQueueApp{
 			{
 				Queue: "DEV-MYAPP",
 				Tags: map[string]string{
 					"App": "myapp",
 					"Env": "dev",
 				},
-				Schedule: []ScheduleItem{
+				Schedule: []AWSScheduleItem{
 					{
 						Name:          "nightly-job",
 						Description:   "night job for my app",
@@ -130,7 +130,7 @@ func TestValidJSON(t *testing.T) {
 			{
 				FunctionARN: "arn:aws:lambda:us-west-2:12345:function:myFunction:deployed",
 				Name:        "myapp",
-				Schedule: []ScheduleItem{
+				Schedule: []AWSScheduleItem{
 					{
 						Name: "nightly-job",
 						Task: "tasks.cleanup_task",
@@ -140,7 +140,7 @@ func TestValidJSON(t *testing.T) {
 		},
 	}
 
-	config := Config{}
+	config := AWSConfig{}
 	assert.NoError(t, json.Unmarshal(validConfig, &config))
 	assert.Equal(t, validConfigObj, config)
 }
@@ -158,8 +158,8 @@ func TestValidJSONNoLambda(t *testing.T) {
   ]
 }`)
 
-	var validConfigObj = Config{
-		QueueApps: []*QueueApp{
+	var validConfigObj = AWSConfig{
+		QueueApps: []*AWSQueueApp{
 			{
 				Queue: "DEV-MYAPP",
 				Tags: map[string]string{
@@ -170,7 +170,7 @@ func TestValidJSONNoLambda(t *testing.T) {
 		},
 	}
 
-	config := Config{}
+	config := AWSConfig{}
 	assert.NoError(t, json.Unmarshal(validConfig, &config))
 	assert.Equal(t, validConfigObj, config)
 }
@@ -185,13 +185,13 @@ func TestValidNoQueueApps(t *testing.T) {
   ]
 }`)
 
-	var validConfigObj = Config{
+	var validConfigObj = AWSConfig{
 		LambdaApps: []*LambdaApp{
 			{FunctionARN: "arn:aws:lambda:us-west-2:12345:function:myFunction:deployed", Name: "myapp"},
 		},
 	}
 
-	config := Config{}
+	config := AWSConfig{}
 	assert.NoError(t, json.Unmarshal(validConfig, &config))
 	assert.Equal(t, validConfigObj, config)
 }

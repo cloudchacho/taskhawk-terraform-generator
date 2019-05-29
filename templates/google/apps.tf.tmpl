@@ -1,0 +1,43 @@
+{{ tfDoNotEditStamp }}
+
+{{range .Apps -}}
+module "app-{{hclident .Queue}}" {
+  source  = "standard-ai/taskhawk-queue/google"
+  version = "~> {{TFGoogleQueueModuleVersion}}"
+
+  queue          = "{{.Queue}}"
+  {{ with alerting -}}
+    alerting       = "true"
+  {{- end }}
+
+  {{with .Labels -}}
+  labels = {{hclvalue .}}
+  {{- end}}
+
+  {{if alerting -}}
+      queue_high_message_count_notification_channels = {{ hclvalue channels.QueueAlertNotificationChannels }}
+      dlq_high_message_count_notification_channels   = {{ hclvalue channels.DLQAlertNotificationChannels }}
+
+      {{ with or .HighMessageCountThresholds.default highMessageCountThreshold -}}
+        queue_alarm_high_message_count_threshold = {{.}}
+      {{- end}}
+      {{ with or .HighMessageCountThresholds.high highMessageCountThreshold -}}
+        queue_alarm_high_priority_high_message_count_threshold = {{.}}
+      {{- end}}
+      {{ with or .HighMessageCountThresholds.low highMessageCountThreshold -}}
+        queue_alarm_low_priority_high_message_count_threshold = {{.}}
+      {{- end}}
+      {{ with or .HighMessageCountThresholds.bulk highMessageCountThreshold -}}
+        queue_alarm_bulk_high_message_count_threshold = {{.}}
+      {{- end}}
+  {{- end}}
+
+  enable_firehose_all_messages = "${var.enable_firehose_all_messages}"
+  {{if flags.EnableFirehoseAllMessages -}}
+      dataflow_tmp_gcs_location = "${var.dataflow_tmp_gcs_location}"
+      dataflow_template_gcs_path = "${var.dataflow_template_pubsub_to_storage_gcs_path}"
+      dataflow_zone = "${var.dataflow_zone}"
+      dataflow_output_directory = "${var.dataflow_output_directory}"
+  {{- end}}
+}
+{{- end}}

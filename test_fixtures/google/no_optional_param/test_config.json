@@ -1,0 +1,18 @@
+{
+    "apps": [
+        {
+            "queue": "dev-myapp",
+            "labels": {
+                "app": "myapp",
+                "env": "dev"
+            }
+        },
+        {
+            "queue": "dev-secondapp",
+            "labels": {
+                "app": "secondapp",
+                "env": "dev"
+            }
+        }
+    ]
+}

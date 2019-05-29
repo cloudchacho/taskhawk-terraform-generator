@@ -1,8 +1,8 @@
 # Taskhawk Terraform Generator
 
-[![Build Status](https://travis-ci.org/Automatic/taskhawk-terraform-generator.svg?branch=master)](https://travis-ci.org/Automatic/taskhawk-terraform-generator)
+[![Build Status](https://travis-ci.org/standard-ai/taskhawk-terraform-generator.svg?branch=master)](https://travis-ci.org/standard-ai/taskhawk-terraform-generator)
 
-[Taskhawk](https://github.com/Automatic/taskhawk) is a replacement for celery that works on AWS SQS/SNS, while
+[Taskhawk](https://github.com/standard-ai/taskhawk) is a replacement for celery that works on AWS SQS/SNS, while
 keeping things pretty simple and straight forward. 
 
 Taskhawk Terraform Generator is a CLI utility that makes the process of managing 
@@ -13,7 +13,7 @@ away details about [Terraform](https://www.terraform.io/).
 
 ### Installation
 
-Download the latest version of the release from [Github releases](https://github.com/Automatic/taskhawk-terraform-generator/releases) - 
+Download the latest version of the release from [Github releases](https://github.com/standard-ai/taskhawk-terraform-generator/releases) - 
 it's distributed as a zip containing a Go binary file.
 
 ### Configuration
@@ -34,7 +34,7 @@ an actual resource at runtime.
 Run 
 
 ```sh
-./taskhawk-terraform-generator apply-config <config file path>
+./taskhawk-terraform-generator --provider <cloud provider> apply-config <config file path>
 ```
 
 to create Terraform modules. The module is named `taskhawk` by default in the current directory.
@@ -53,7 +53,7 @@ Assuming that you have go installed, set up your environment:
 
 ```sh
 $ # in a location NOT in your GOPATH:
-$ git checkout github.com/Automatic/taskhawk-terraform-generator
+$ git checkout github.com/standard-ai/taskhawk-terraform-generator
 $ cd taskhawk-terraform-generator
 $ go get -mod=readonly -v ./...
 $ GO111MODULE=off go get github.com/go-bindata/go-bindata/...
@@ -73,7 +73,7 @@ $ go test -run TestGenerate ./...
 
 ## Release Notes
 
-[Github Releases](https://github.com/Automatic/taskhawk-terraform-generator/releases)
+[Github Releases](https://github.com/standard-ai/taskhawk-terraform-generator/releases)
 
 ## How to publish
 

@@ -1,0 +1,24 @@
+{
+    "apps": [
+        {
+            "queue": "dev-myapp",
+            "labels": {
+                "app": "myapp",
+                "env": "dev"
+            }
+        },
+        {
+            "queue": "dev-secondapp",
+            "labels": {
+                "app": "secondapp",
+                "env": "dev"
+            },
+            "high_message_count_thresholds": {
+                "high": 100,
+                "default": 1000,
+                "low": 50000,
+                "bulk": 100000
+            }
+        }
+    ]
+}
