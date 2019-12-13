@@ -16,10 +16,18 @@ variable "dataflow_zone" {
   default = "us-west2-a"
 }
 
-variable "enable_firehose_all_messages" {
-  default = "true"
+variable "dataflow_region" {
+  default = "us-west1"
 }
 
 variable "dataflow_output_directory" {
   default = "gs://myBucket/taskhawkBackup/"
+}
+
+variable "enable_firehose_all_messages" {
+  default = "true"
+}
+
+variable "alerting_project" {
+  default = "alerting-project"
 }

@@ -1,5 +1,6 @@
 {{ tfDoNotEditStamp }}
 
+{{if flags.EnableFirehoseAllMessages -}}
 variable "dataflow_tmp_gcs_location" {
 {{with variables.DataflowTmpGCSLocation -}}
   default = "{{ . }}"
@@ -24,8 +25,10 @@ variable "dataflow_zone" {
 {{- end}}
 }
 
-variable "enable_firehose_all_messages" {
-  default = "{{ flags.EnableFirehoseAllMessages }}"
+variable "dataflow_region" {
+{{with variables.DataflowRegion -}}
+  default = "{{ . }}"
+{{- end}}
 }
 
 variable "dataflow_output_directory" {
@@ -33,3 +36,14 @@ variable "dataflow_output_directory" {
   default = "{{ . }}"
 {{- end}}
 }
+{{- end}}
+
+variable "enable_firehose_all_messages" {
+  default = "{{ flags.EnableFirehoseAllMessages }}"
+}
+
+{{with variables.GoogleProjectAlerting -}}
+variable "alerting_project" {
+  default = "{{ . }}"
+}
+{{- end}}

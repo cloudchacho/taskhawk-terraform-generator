@@ -5,9 +5,13 @@ module "app-{{hclident .Queue}}" {
   source  = "standard-ai/taskhawk-queue/google"
   version = "~> {{TFGoogleQueueModuleVersion}}"
 
-  queue          = "{{.Queue}}"
+  queue = "{{.Queue}}"
+
   {{ with alerting -}}
-    alerting       = "true"
+    alerting = "true"
+    {{ with variables.GoogleProjectAlerting -}}
+      alerting_project = "${var.alerting_project}"
+    {{- end}}
   {{- end }}
 
   {{with .Labels -}}
@@ -37,6 +41,7 @@ module "app-{{hclident .Queue}}" {
       dataflow_tmp_gcs_location = "${var.dataflow_tmp_gcs_location}"
       dataflow_template_gcs_path = "${var.dataflow_template_pubsub_to_storage_gcs_path}"
       dataflow_zone = "${var.dataflow_zone}"
+      dataflow_region = "${var.dataflow_region}"
       dataflow_output_directory = "${var.dataflow_output_directory}"
   {{- end}}
 }

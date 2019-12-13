@@ -4,8 +4,10 @@ module "app-dev-myapp" {
   source  = "standard-ai/taskhawk-queue/google"
   version = "~> {{TFGoogleQueueModuleVersion}}"
 
-  queue    = "dev-myapp"
-  alerting = "true"
+  queue = "dev-myapp"
+
+  alerting         = "true"
+  alerting_project = "${var.alerting_project}"
 
   labels = {
     app = "myapp"
@@ -31,6 +33,7 @@ module "app-dev-myapp" {
   dataflow_tmp_gcs_location    = "${var.dataflow_tmp_gcs_location}"
   dataflow_template_gcs_path   = "${var.dataflow_template_pubsub_to_storage_gcs_path}"
   dataflow_zone                = "${var.dataflow_zone}"
+  dataflow_region              = "${var.dataflow_region}"
   dataflow_output_directory    = "${var.dataflow_output_directory}"
 }
 
@@ -38,8 +41,10 @@ module "app-dev-secondapp" {
   source  = "standard-ai/taskhawk-queue/google"
   version = "~> {{TFGoogleQueueModuleVersion}}"
 
-  queue    = "dev-secondapp"
-  alerting = "true"
+  queue = "dev-secondapp"
+
+  alerting         = "true"
+  alerting_project = "${var.alerting_project}"
 
   labels = {
     app = "secondapp"
@@ -65,5 +70,6 @@ module "app-dev-secondapp" {
   dataflow_tmp_gcs_location    = "${var.dataflow_tmp_gcs_location}"
   dataflow_template_gcs_path   = "${var.dataflow_template_pubsub_to_storage_gcs_path}"
   dataflow_zone                = "${var.dataflow_zone}"
+  dataflow_region              = "${var.dataflow_region}"
   dataflow_output_directory    = "${var.dataflow_output_directory}"
 }
