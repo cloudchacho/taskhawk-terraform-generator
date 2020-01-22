@@ -17,7 +17,7 @@ const (
 
 const (
 	// VERSION represents the version of the generator tool
-	VERSION = "v2.1.1"
+	VERSION = "v2.1.2"
 
 	// TFAWSQueueModuleVersion represents the version of the AWS taskhawk-queue module
 	TFAWSQueueModuleVersion = "1.1.3"
@@ -149,6 +149,19 @@ var providerAlertingFlags = map[string][]string{
 	},
 }
 
+var providerAlertingRequiredFlags = map[string][]string{
+	cloudProviderAWS: {
+		queueAlertAlarmActionsFlag,
+		queueAlertOKActionsFlag,
+		dlqAlertAlarmActionsFlag,
+		dlqAlertOKActionsFlag,
+	},
+	cloudProviderGoogle: {
+		queueAlertNotificationChannelsFlag,
+		dlqAlertNotificationChannelsFlag,
+	},
+}
+
 func validateArgs(c *cli.Context) *cli.ExitError {
 	cloudProvider := c.GlobalString(cloudProviderFlag)
 	if cloudProvider == "" {
@@ -190,7 +203,7 @@ func validateArgs(c *cli.Context) *cli.ExitError {
 	// verify alerting flags are used correctly
 	alertingFlagsOkay := true
 	if c.Bool(alertingFlag) {
-		for _, f := range providerAlertingFlags[cloudProvider] {
+		for _, f := range providerAlertingRequiredFlags[cloudProvider] {
 			if !c.IsSet(f) {
 				alertingFlagsOkay = false
 				msg := fmt.Sprintf("--%s is required\n", f)
