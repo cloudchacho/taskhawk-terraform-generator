@@ -27,7 +27,7 @@ func (w *googleConfigWriter) initTemplates() (*template.Template, error) {
 		"DataflowZone":                           w.c.String(googleDataflowZoneFlag),
 		"DataflowRegion":                           w.c.String(googleDataflowRegionFlag),
 		"DataflowOutputDirectory":                w.c.String(googleFirehoseDataflowOutputDirectoryFlag),
-		"GoogleProjectAlerting":                  w.c.String(googleProjectAlerting),
+		"GoogleProjectAlerting":                  w.c.String(googleProjectAlertingFlag),
 	}
 	flags := map[string]bool{
 		"EnableFirehoseAllMessages": w.c.Bool(enableFirehoseAllMessages),

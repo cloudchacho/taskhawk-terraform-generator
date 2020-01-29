@@ -10,6 +10,7 @@ import (
 // GoogleApp struct represents a Taskhawk consumer app
 type GoogleApp struct {
 	Queue                      string            `json:"queue"`
+	ServiceAccount             string            `json:"service_account"`
 	Labels                     map[string]string `json:"labels"`
 	HighMessageCountThresholds map[string]int    `json:"high_message_count_thresholds,omitempty"`
 }

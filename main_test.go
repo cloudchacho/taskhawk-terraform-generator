@@ -54,7 +54,7 @@ func argsForTest(cloudProvider string, configFilepath string) []string {
 	} else if cloudProvider == cloudProviderGoogle {
 		args = append(
 			args,
-            fmt.Sprintf(`--%s=alerting-project`, googleProjectAlerting),
+            fmt.Sprintf(`--%s=alerting-project`, googleProjectAlertingFlag),
 			fmt.Sprintf(`--%s=gs://myBucket/tmp`, dataflowTmpGCSLocationFlag),
 			fmt.Sprintf(
 				`--%s=gs://dataflow-templates/2019-04-03-00/Cloud_PubSub_to_Cloud_PubSub`,

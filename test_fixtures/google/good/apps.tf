@@ -9,6 +9,8 @@ module "app-dev-myapp" {
   alerting         = "true"
   alerting_project = "${var.alerting_project}"
 
+  iam_service_account = "myapp@project.iam.gserviceaccount.com"
+
   labels = {
     app = "myapp"
     env = "dev"
@@ -45,6 +47,8 @@ module "app-dev-secondapp" {
 
   alerting         = "true"
   alerting_project = "${var.alerting_project}"
+
+  iam_service_account = "secondapp@project.iam.gserviceaccount.com"
 
   labels = {
     app = "secondapp"
