@@ -39,7 +39,8 @@ variable "dataflow_output_directory" {
 {{- end}}
 
 variable "enable_firehose_all_messages" {
-  default = "{{ flags.EnableFirehoseAllMessages }}"
+  default = {{ flags.EnableFirehoseAllMessages }}
+  type    = bool
 }
 
 {{with variables.GoogleProjectAlerting -}}

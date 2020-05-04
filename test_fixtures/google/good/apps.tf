@@ -7,7 +7,7 @@ module "app-dev-myapp" {
   queue = "dev-myapp"
 
   alerting         = "true"
-  alerting_project = "${var.alerting_project}"
+  alerting_project = var.alerting_project
 
   iam_service_account = "myapp@project.iam.gserviceaccount.com"
 
@@ -18,12 +18,11 @@ module "app-dev-myapp" {
 
   queue_high_message_count_notification_channels = [
     "projects/myProject/notificationChannels/10357685029951383687",
-    "projects/myProject/notificationChannels/95138368710357685029",
+    "projects/myProject/notificationChannels/95138368710357685029"
   ]
-
   dlq_high_message_count_notification_channels = [
     "projects/myProject/notificationChannels/10357685029951383687",
-    "projects/myProject/notificationChannels/95138368710357685029",
+    "projects/myProject/notificationChannels/95138368710357685029"
   ]
 
   queue_alarm_high_message_count_threshold               = 5000
@@ -31,12 +30,12 @@ module "app-dev-myapp" {
   queue_alarm_low_priority_high_message_count_threshold  = 5000
   queue_alarm_bulk_high_message_count_threshold          = 5000
 
-  enable_firehose_all_messages = "${var.enable_firehose_all_messages}"
-  dataflow_tmp_gcs_location    = "${var.dataflow_tmp_gcs_location}"
-  dataflow_template_gcs_path   = "${var.dataflow_template_pubsub_to_storage_gcs_path}"
-  dataflow_zone                = "${var.dataflow_zone}"
-  dataflow_region              = "${var.dataflow_region}"
-  dataflow_output_directory    = "${var.dataflow_output_directory}"
+  enable_firehose_all_messages = var.enable_firehose_all_messages
+  dataflow_tmp_gcs_location    = var.dataflow_tmp_gcs_location
+  dataflow_template_gcs_path   = var.dataflow_template_pubsub_to_storage_gcs_path
+  dataflow_zone                = var.dataflow_zone
+  dataflow_region              = var.dataflow_region
+  dataflow_output_directory    = var.dataflow_output_directory
 }
 
 module "app-dev-secondapp" {
@@ -46,7 +45,7 @@ module "app-dev-secondapp" {
   queue = "dev-secondapp"
 
   alerting         = "true"
-  alerting_project = "${var.alerting_project}"
+  alerting_project = var.alerting_project
 
   iam_service_account = "secondapp@project.iam.gserviceaccount.com"
 
@@ -57,12 +56,11 @@ module "app-dev-secondapp" {
 
   queue_high_message_count_notification_channels = [
     "projects/myProject/notificationChannels/10357685029951383687",
-    "projects/myProject/notificationChannels/95138368710357685029",
+    "projects/myProject/notificationChannels/95138368710357685029"
   ]
-
   dlq_high_message_count_notification_channels = [
     "projects/myProject/notificationChannels/10357685029951383687",
-    "projects/myProject/notificationChannels/95138368710357685029",
+    "projects/myProject/notificationChannels/95138368710357685029"
   ]
 
   queue_alarm_high_message_count_threshold               = 1000
@@ -70,10 +68,10 @@ module "app-dev-secondapp" {
   queue_alarm_low_priority_high_message_count_threshold  = 50000
   queue_alarm_bulk_high_message_count_threshold          = 100000
 
-  enable_firehose_all_messages = "${var.enable_firehose_all_messages}"
-  dataflow_tmp_gcs_location    = "${var.dataflow_tmp_gcs_location}"
-  dataflow_template_gcs_path   = "${var.dataflow_template_pubsub_to_storage_gcs_path}"
-  dataflow_zone                = "${var.dataflow_zone}"
-  dataflow_region              = "${var.dataflow_region}"
-  dataflow_output_directory    = "${var.dataflow_output_directory}"
+  enable_firehose_all_messages = var.enable_firehose_all_messages
+  dataflow_tmp_gcs_location    = var.dataflow_tmp_gcs_location
+  dataflow_template_gcs_path   = var.dataflow_template_pubsub_to_storage_gcs_path
+  dataflow_zone                = var.dataflow_zone
+  dataflow_region              = var.dataflow_region
+  dataflow_output_directory    = var.dataflow_output_directory
 }

@@ -25,7 +25,8 @@ variable "dataflow_output_directory" {
 }
 
 variable "enable_firehose_all_messages" {
-  default = "true"
+  default = true
+  type    = bool
 }
 
 variable "alerting_project" {

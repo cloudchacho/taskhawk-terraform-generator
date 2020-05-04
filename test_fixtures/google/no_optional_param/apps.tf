@@ -11,7 +11,7 @@ module "app-dev-myapp" {
     env = "dev"
   }
 
-  enable_firehose_all_messages = "${var.enable_firehose_all_messages}"
+  enable_firehose_all_messages = var.enable_firehose_all_messages
 }
 
 module "app-dev-secondapp" {
@@ -25,5 +25,5 @@ module "app-dev-secondapp" {
     env = "dev"
   }
 
-  enable_firehose_all_messages = "${var.enable_firehose_all_messages}"
+  enable_firehose_all_messages = var.enable_firehose_all_messages
 }

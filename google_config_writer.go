@@ -1,9 +1,10 @@
 package main
 
 import (
-	"gopkg.in/urfave/cli.v1"
 	"path/filepath"
 	"text/template"
+
+	"gopkg.in/urfave/cli.v1"
 )
 
 type googleConfigWriter struct {
@@ -25,7 +26,7 @@ func (w *googleConfigWriter) initTemplates() (*template.Template, error) {
 		"DataflowPubSubToPubSubTemplateGCSPath":  w.c.String(dataflowPubSubToPubSubTemplateGCSPathFlag),
 		"DataflowPubSubToStorageTemplateGCSPath": w.c.String(dataflowPubSubToStorageGCSPathFlag),
 		"DataflowZone":                           w.c.String(googleDataflowZoneFlag),
-		"DataflowRegion":                           w.c.String(googleDataflowRegionFlag),
+		"DataflowRegion":                         w.c.String(googleDataflowRegionFlag),
 		"DataflowOutputDirectory":                w.c.String(googleFirehoseDataflowOutputDirectoryFlag),
 		"GoogleProjectAlerting":                  w.c.String(googleProjectAlertingFlag),
 	}
