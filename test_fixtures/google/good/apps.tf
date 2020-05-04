@@ -24,6 +24,10 @@ module "app-dev-myapp" {
     "projects/myProject/notificationChannels/10357685029951383687",
     "projects/myProject/notificationChannels/95138368710357685029"
   ]
+  dataflow_freshness_alert_notification_channels = [
+    "projects/myProject/notificationChannels/10357685029951383687",
+    "projects/myProject/notificationChannels/95138368710357685029"
+  ]
 
   queue_alarm_high_message_count_threshold               = 5000
   queue_alarm_high_priority_high_message_count_threshold = 5000
@@ -59,6 +63,10 @@ module "app-dev-secondapp" {
     "projects/myProject/notificationChannels/95138368710357685029"
   ]
   dlq_high_message_count_notification_channels = [
+    "projects/myProject/notificationChannels/10357685029951383687",
+    "projects/myProject/notificationChannels/95138368710357685029"
+  ]
+  dataflow_freshness_alert_notification_channels = [
     "projects/myProject/notificationChannels/10357685029951383687",
     "projects/myProject/notificationChannels/95138368710357685029"
   ]

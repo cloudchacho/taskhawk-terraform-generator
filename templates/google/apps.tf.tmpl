@@ -25,6 +25,7 @@ module "app-{{hclident .Queue}}" {
   {{if flags.EnableAlerts -}}
       queue_high_message_count_notification_channels = {{ hclvalue channels.QueueAlertNotificationChannels }}
       dlq_high_message_count_notification_channels   = {{ hclvalue channels.DLQAlertNotificationChannels }}
+      dataflow_freshness_alert_notification_channels = {{ hclvalue channels.DataflowAlertNotificationChannels }}
 
       {{ with or .HighMessageCountThresholds.default highMessageCountThreshold -}}
         queue_alarm_high_message_count_threshold = {{.}}
