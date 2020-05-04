@@ -29,6 +29,11 @@ variable "enable_firehose_all_messages" {
   type    = bool
 }
 
+variable "enable_alerts" {
+  default = true
+  type    = bool
+}
+
 variable "alerting_project" {
   default = "alerting-project"
 }

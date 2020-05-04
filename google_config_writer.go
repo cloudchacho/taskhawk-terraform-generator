@@ -32,6 +32,7 @@ func (w *googleConfigWriter) initTemplates() (*template.Template, error) {
 	}
 	flags := map[string]bool{
 		"EnableFirehoseAllMessages": w.c.Bool(enableFirehoseAllMessages),
+		"EnableAlerts":              w.c.Bool(alertingFlag),
 	}
 	files := []string{
 		appsTmplFile,
@@ -46,7 +47,6 @@ func (w *googleConfigWriter) initTemplates() (*template.Template, error) {
 		"hclvalue":                  hclvalue,
 		"hclident":                  hclident,
 		"tfDoNotEditStamp":          func() string { return tfDoNotEditStamp },
-		"alerting":                  func() bool { return w.c.Bool(alertingFlag) },
 
 		"TFGoogleQueueModuleVersion": func() string { return TFGoogleQueueModuleVersion },
 	})

@@ -43,6 +43,11 @@ variable "enable_firehose_all_messages" {
   type    = bool
 }
 
+variable "enable_alerts" {
+  default = {{ flags.EnableAlerts }}
+  type    = bool
+}
+
 {{with variables.GoogleProjectAlerting -}}
 variable "alerting_project" {
   default = "{{ . }}"

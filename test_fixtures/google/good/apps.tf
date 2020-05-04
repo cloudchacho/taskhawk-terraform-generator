@@ -6,7 +6,7 @@ module "app-dev-myapp" {
 
   queue = "dev-myapp"
 
-  alerting         = "true"
+  enable_alerts    = var.enable_alerts
   alerting_project = var.alerting_project
 
   iam_service_account = "myapp@project.iam.gserviceaccount.com"
@@ -44,7 +44,7 @@ module "app-dev-secondapp" {
 
   queue = "dev-secondapp"
 
-  alerting         = "true"
+  enable_alerts    = var.enable_alerts
   alerting_project = var.alerting_project
 
   iam_service_account = "secondapp@project.iam.gserviceaccount.com"

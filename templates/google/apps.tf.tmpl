@@ -7,8 +7,8 @@ module "app-{{hclident .Queue}}" {
 
   queue = "{{.Queue}}"
 
-  {{ with alerting -}}
-    alerting = "true"
+  {{ with flags.EnableAlerts -}}
+    enable_alerts = var.enable_alerts
     {{ with variables.GoogleProjectAlerting -}}
       alerting_project = var.alerting_project
     {{- end}}
@@ -22,7 +22,7 @@ module "app-{{hclident .Queue}}" {
   labels = {{hclvalue .}}
   {{- end}}
 
-  {{if alerting -}}
+  {{if flags.EnableAlerts -}}
       queue_high_message_count_notification_channels = {{ hclvalue channels.QueueAlertNotificationChannels }}
       dlq_high_message_count_notification_channels   = {{ hclvalue channels.DLQAlertNotificationChannels }}
 
