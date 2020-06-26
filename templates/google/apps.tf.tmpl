@@ -14,8 +14,8 @@ module "app-{{hclident .Queue}}" {
     {{- end}}
   {{- end }}
 
-  {{with .ServiceAccount -}}
-  iam_service_account = {{hclvalue .}}
+  {{with .ServiceAccounts -}}
+  iam_service_accounts = {{hclvalue .}}
   {{- end}}
 
   {{with .Labels -}}

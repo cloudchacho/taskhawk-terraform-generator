@@ -9,7 +9,9 @@ module "app-dev-myapp" {
   enable_alerts    = var.enable_alerts
   alerting_project = var.alerting_project
 
-  iam_service_account = "myapp@project.iam.gserviceaccount.com"
+  iam_service_accounts = [
+    "myapp@project.iam.gserviceaccount.com"
+  ]
 
   labels = {
     app = "myapp"
@@ -51,7 +53,9 @@ module "app-dev-secondapp" {
   enable_alerts    = var.enable_alerts
   alerting_project = var.alerting_project
 
-  iam_service_account = "secondapp@project.iam.gserviceaccount.com"
+  iam_service_accounts = [
+    "secondapp@project.iam.gserviceaccount.com"
+  ]
 
   labels = {
     app = "secondapp"

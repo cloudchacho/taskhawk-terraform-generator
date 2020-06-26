@@ -2,7 +2,7 @@
     "apps": [
         {
             "queue": "dev-myapp",
-            "service_account": "myapp@project.iam.gserviceaccount.com",
+            "service_accounts": ["myapp@project.iam.gserviceaccount.com"],
             "labels": {
                 "app": "myapp",
                 "env": "dev"
@@ -10,7 +10,7 @@
         },
         {
             "queue": "dev-secondapp",
-            "service_account": "secondapp@project.iam.gserviceaccount.com",
+            "service_accounts": ["secondapp@project.iam.gserviceaccount.com"],
             "labels": {
                 "app": "secondapp",
                 "env": "dev"
