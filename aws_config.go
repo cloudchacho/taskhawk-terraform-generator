@@ -36,12 +36,11 @@ type AWSQueueApp struct {
 
 // LambdaApp struct represents a Taskhawk subscription for a lambda app
 type LambdaApp struct {
-	FunctionARN                string            `json:"function_arn"`
-	FunctionName               string            `json:"function_name,omitempty"`
-	FunctionQualifier          string            `json:"function_qualifier,omitempty"`
-	Name                       string            `json:"name"`
-	Schedule                   []AWSScheduleItem `json:"schedule,omitempty"`
-	HighMessageCountThresholds map[string]int    `json:"high_message_count_thresholds,omitempty"`
+	FunctionARN       string            `json:"function_arn"`
+	FunctionName      string            `json:"function_name,omitempty"`
+	FunctionQualifier string            `json:"function_qualifier,omitempty"`
+	Name              string            `json:"name"`
+	Schedule          []AWSScheduleItem `json:"schedule,omitempty"`
 }
 
 var lambdaARNRegexp = regexp.MustCompile(`^arn:aws:lambda:([^:]+):([^:]+):function:([^:]+)(:([^:]+))?$`)
