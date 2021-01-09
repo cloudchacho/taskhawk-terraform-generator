@@ -49,6 +49,29 @@ module "app-{{hclident .Queue}}" {
       dataflow_region = var.dataflow_region
       dataflow_output_directory = var.dataflow_output_directory
   {{- end}}
+  {{ with .SchedulerJobs }}
+  scheduler_jobs = [
+    {{ range $index, $element := . -}}
+    {{ if $index -}},
+    {{ end -}}
+    {
+      name = "{{.Name}}"
+      description = "{{.Description}}"
+
+      format_version = "{{or .FormatVersion "v1.0"}}"
+
+      schedule = "{{.Schedule}}"
+      timezone = "{{.Timezone}}"
+
+      headers = {{hclvalue .Headers}}
+
+      task    = "{{.Task}}"
+      args = {{hclvalue .Args}}
+      kwargs = {{hclvalue .Kwargs}}
+    }
+    {{- end}}
+  ]
+  {{- end}}
 }
 
 {{end}}

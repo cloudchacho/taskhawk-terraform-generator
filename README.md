@@ -55,6 +55,7 @@ Assuming that you have go installed, set up your environment:
 $ # in a location NOT in your GOPATH:
 $ git checkout github.com/standard-ai/taskhawk-terraform-generator
 $ cd taskhawk-terraform-generator
+$ go-bindata -prefix "templates/" templates/*
 $ go get -mod=readonly -v ./...
 $ GO111MODULE=off go get github.com/go-bindata/go-bindata/...
 $ GO111MODULE=off go get -u github.com/client9/misspell/cmd/misspell

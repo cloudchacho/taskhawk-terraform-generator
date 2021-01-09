@@ -7,12 +7,26 @@ import (
 	"regexp"
 )
 
+// GoogleSchedulerJob struct represents a Taskhawk schedule for periodic jobs
+type GoogleSchedulerJob struct {
+	Name          string                 `json:"name"`
+	Description   string                 `json:"description"`
+	FormatVersion string                 `json:"format_version,omitempty"`
+	Headers       map[string]string      `json:"headers,omitempty"`
+	Timezone      string                 `json:"timezone,omitempty"`
+	Task          string                 `json:"task"`
+	Args          []interface{}          `json:"args,omitempty"`
+	Kwargs        map[string]interface{} `json:"kwargs,omitempty"`
+	Schedule      string                 `json:"schedule"`
+}
+
 // GoogleApp struct represents a Taskhawk consumer app
 type GoogleApp struct {
-	Queue                      string            `json:"queue"`
-	ServiceAccounts            []string          `json:"service_accounts"`
-	Labels                     map[string]string `json:"labels"`
-	HighMessageCountThresholds map[string]int    `json:"high_message_count_thresholds,omitempty"`
+	Queue                      string               `json:"queue"`
+	ServiceAccounts            []string             `json:"service_accounts"`
+	Labels                     map[string]string    `json:"labels"`
+	HighMessageCountThresholds map[string]int       `json:"high_message_count_thresholds,omitempty"`
+	SchedulerJobs              []GoogleSchedulerJob `json:"scheduler_jobs,omitempty"`
 }
 
 // GoogleConfig struct represents the Taskhawk configuration for Google Cloud

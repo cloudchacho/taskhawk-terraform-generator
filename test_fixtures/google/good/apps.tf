@@ -42,6 +42,48 @@ module "app-dev-myapp" {
   dataflow_zone                = var.dataflow_zone
   dataflow_region              = var.dataflow_region
   dataflow_output_directory    = var.dataflow_output_directory
+
+  scheduler_jobs = [
+    {
+      name        = "nightly-job"
+      description = "nightly job"
+
+      format_version = "v1.0"
+
+      schedule = "0 10 * * ? *"
+      timezone = "America/Los_Angeles"
+
+      headers = {
+        request_id = "79c7104b-1364-323e-ad09-89ed72089f98"
+      }
+
+      task = "tasks.send_email"
+      args = [
+        "hello@standard.ai",
+        "Hello!",
+        10
+      ]
+      kwargs = {
+        from_email = "spam@example.com"
+        with_delay = 100
+      }
+    },
+    {
+      name        = "nightly-job2"
+      description = ""
+
+      format_version = "v1.0"
+
+      schedule = "0 5 * * ? *"
+      timezone = ""
+
+      headers = {}
+
+      task   = "tasks.cleanup_task"
+      args   = []
+      kwargs = {}
+    }
+  ]
 }
 
 module "app-dev-secondapp" {
