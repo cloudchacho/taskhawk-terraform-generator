@@ -27,7 +27,8 @@
                 {
                     "name": "nightly-job2",
                     "schedule": "0 5 * * ? *",
-                    "task": "tasks.cleanup_task"
+                    "task": "tasks.cleanup_task",
+                    "priority": "high"
                 }
             ],
             "labels": {

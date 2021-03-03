@@ -58,6 +58,8 @@ module "app-{{hclident .Queue}}" {
       name = "{{.Name}}"
       description = "{{.Description}}"
 
+      priority = "{{.Priority}}"
+
       format_version = "{{or .FormatVersion "v1.0"}}"
 
       schedule = "{{.Schedule}}"

@@ -11,6 +11,7 @@ import (
 type GoogleSchedulerJob struct {
 	Name          string                 `json:"name"`
 	Description   string                 `json:"description"`
+	Priority      string                 `json:"priority,omitempty"`
 	FormatVersion string                 `json:"format_version,omitempty"`
 	Headers       map[string]string      `json:"headers,omitempty"`
 	Timezone      string                 `json:"timezone,omitempty"`
