@@ -17,7 +17,7 @@ const (
 
 const (
 	// VERSION represents the version of the generator tool
-	VERSION = "v4.2.3"
+	VERSION = "v4.2.4"
 
 	// TFAWSQueueModuleVersion represents the version of the AWS taskhawk-queue module
 	TFAWSQueueModuleVersion = "1.1.4"

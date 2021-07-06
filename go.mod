@@ -1,4 +1,4 @@
-module github.com/Automatic/taskhawk-terraform-generator
+module github.com/cloudchacho/taskhawk-terraform-generator
 
 require (
 	github.com/client9/misspell v0.3.4 // indirect

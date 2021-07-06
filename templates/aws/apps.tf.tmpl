@@ -2,7 +2,7 @@
 
 {{range .QueueApps -}}
 module "app-{{hclident .Queue}}" {
-  source  = "Automatic/taskhawk-queue/aws"
+  source  = "cloudchacho/taskhawk-queue/aws"
   version = "~> {{TFAWSQueueModuleVersion}}"
 
   queue          = "{{.Queue}}"
@@ -46,7 +46,7 @@ module "app-{{hclident .Queue}}" {
 
 {{range .LambdaApps -}}
 module "app-{{hclident .Name}}" {
-  source  = "Automatic/taskhawk-lambda/aws"
+  source  = "cloudchacho/taskhawk-lambda/aws"
   version = "~> {{TFAWSLambdaModuleVersion}}"
 
   name               = "{{.Name}}"

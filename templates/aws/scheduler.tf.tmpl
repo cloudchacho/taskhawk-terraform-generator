@@ -27,7 +27,7 @@
 {{range $q := .QueueApps -}}
 {{range .Schedule -}}
 module "scheduler-{{hclident $q.Queue}}-{{hclident .Name}}" {
-  source  = "Automatic/taskhawk-scheduler/aws"
+  source  = "cloudchacho/taskhawk-scheduler/aws"
   version = "~> {{TFAWSSchedulerModuleVersion}}"
 
   queue       = "${module.app-{{hclident $q.Queue}}.default_queue_arn}"
@@ -40,7 +40,7 @@ module "scheduler-{{hclident $q.Queue}}-{{hclident .Name}}" {
 {{range $l := .LambdaApps -}}
 {{range .Schedule -}}
 module "scheduler-{{hclident $l.Name}}-{{hclident .Name}}" {
-  source  = "Automatic/taskhawk-scheduler/aws"
+  source  = "cloudchacho/taskhawk-scheduler/aws"
   version = "~> {{TFAWSSchedulerModuleVersion}}"
 
   topic       = "${module.app-{{hclident $l.Name}}.sns_topic_default_arn}"
