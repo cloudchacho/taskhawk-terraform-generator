@@ -2,7 +2,7 @@
 
 {{range .Apps -}}
 module "app-{{hclident .Queue}}" {
-  source  = "standard-ai/taskhawk-queue/google"
+  source  = "cloudchacho/taskhawk-queue/google"
   version = "~> {{TFGoogleQueueModuleVersion}}"
 
   queue = "{{.Queue}}"
